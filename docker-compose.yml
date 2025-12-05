@@ -1,0 +1,63 @@
+services:
+  # MongoDB Database Local
+  mongodb:
+    image: mongo:7
+    container_name: arch-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: arch
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - software-arch-network
+    restart: unless-stopped
+
+  # Backend Express API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: arch-backend
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      # Base de datos LOCAL (Docker)
+      MONGO_URI: mongodb://admin:admin123@mongodb:27017/arch?authSource=admin
+      # Para usar Atlas en su lugar, cambia a:
+      # MONGO_URI: mongodb+srv://admin:admin@pry.zgztdfx.mongodb.net/pry?retryWrites=true&w=majority
+    volumes:
+      - ./backend/src:/app/src
+    depends_on:
+      - mongodb
+      - frontend
+    networks:
+      - software-arch-network
+    restart: unless-stopped
+
+  # Frontend React Vite
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: arch-frontend
+    ports:
+      - "3001:3001"
+    environment:
+      VITE_API_URL: http://localhost:3000/api/v1
+    networks:
+      - software-arch-network
+    restart: unless-stopped
+
+networks:
+  software-arch-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+  backend_node_modules:
+  frontend_node_modules:
