@@ -10,7 +10,6 @@ const resolvers = require('./graphql/resolvers');
 
 const app = express();
 
-// Middleware básico
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -22,15 +21,14 @@ connectDB();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  introspection: true, // Habilitar introspección para GraphQL Playground
-  playground: true, // Habilitar playground
+  introspection: true, 
+  playground: true, 
 });
 
 // Iniciar Apollo Server
 async function startServer() {
   await server.start();
   
-  // Aplicar middleware de Apollo Server
   app.use('/graphql', expressMiddleware(server));
 
   // Health check endpoint
