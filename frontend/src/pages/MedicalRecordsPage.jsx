@@ -54,6 +54,7 @@ const MedicalRecordsPage = () => {
     errors,
     touched,
     handleInputChange,
+    handleGeneralInputChange,
     handleSubmit: handleFormSubmit,
     resetForm,
   } = useMedicalForm((input) => {
@@ -127,6 +128,7 @@ const MedicalRecordsPage = () => {
             errors={errors}
             touched={touched}
             onInputChange={handleInputChange}
+            onGeneralInputChange={handleGeneralInputChange}
             onSubmit={handleFormSubmit}
             isLoading={creating}
           />

@@ -15,6 +15,7 @@ const MedicalRecordForm = ({
   errors, 
   touched,
   onInputChange, 
+  onGeneralInputChange,
   onSubmit, 
   isLoading = false 
 }) => {
@@ -129,7 +130,7 @@ const MedicalRecordForm = ({
           name="motivoConsulta"
           label="Motivo de Consulta"
           value={formData.motivoConsulta}
-          onChange={onInputChange}
+          onChange={onGeneralInputChange}
           placeholder="Describe el motivo de la consulta"
           required
           error={errors.reason}
@@ -139,7 +140,7 @@ const MedicalRecordForm = ({
           name="diagnostico"
           label="Diagnóstico"
           value={formData.diagnostico}
-          onChange={onInputChange}
+          onChange={onGeneralInputChange}
           placeholder="Diagnóstico realizado"
           required
           error={errors.diagnosis}
@@ -149,7 +150,7 @@ const MedicalRecordForm = ({
           name="tratamiento"
           label="Tratamiento"
           value={formData.tratamiento}
-          onChange={onInputChange}
+          onChange={onGeneralInputChange}
           placeholder="Tratamiento recomendado"
           required
           error={errors.treatment}
@@ -160,7 +161,7 @@ const MedicalRecordForm = ({
           label="Fecha de la Consulta"
           type="date"
           value={formData.fecha}
-          onChange={onInputChange}
+          onChange={onGeneralInputChange}
           required
           error={errors.date}
         />
